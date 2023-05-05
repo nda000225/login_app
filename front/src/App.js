@@ -2,9 +2,9 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Login APP</h1>
-    </div>
+    <main>
+      <h1 className='text-3xl font-bold underline'>Login APP</h1>
+    </main>
   );
 }
 
