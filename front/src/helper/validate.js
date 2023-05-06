@@ -34,3 +34,16 @@ function passwordVerify(error = {}, values) {
 
   return error;
 }
+
+
+export async function resetPasswordValidate(values) {
+  const errors = passwordVerify({}, values);
+  if(values.password != values.password_confirm){
+    errors.exist = toast.error("password not match");
+  }
+  return errors
+}
+
+
+
+
