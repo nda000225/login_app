@@ -8,7 +8,7 @@ router.post("/login", verifyUser, login);
 router.post('/authenticate', )
 router.post('/register/mail', )
 
-router.put("/update/user", updateUser);
+router.put("/update/user/:id", updateUser);
 router.put('/reset/password', resetPassword)
 
 router.get("/user/:username", getUser);

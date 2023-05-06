@@ -102,23 +102,48 @@ export const login = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
- const {username} = req.params;
- try {
-   const user = await User.findOne({username});
-   res.status(200).json({
-     success: true,
-     message: "Votre demande a été trouvé",
-     data: user,
-   });
- } catch (err) {
-   res.status(404).json({
-     success: false,
-     message: "Votre demande n'est pas traitée.",
-   });
- }
+  const { username } = req.params;
+  try {
+    const user = await User.findOne({ username });
+    res.status(200).json({
+      success: true,
+      message: "Votre demande a été trouvé",
+      data: user,
+    });
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: "Votre demande n'est pas traitée.",
+    });
+  }
 };
 
-export const updateUser = async (req, res) => {};
+export const updateUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    if (!id)
+      return res
+        .status(401)
+        .json({ success: false, message: "Identifiant introuvable" });
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(201).json({
+      success: true,
+      message: "Votre compte a été mise à jour",
+      data: updatedUser,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Echec de l'operation, Veuillez réessayez plus tard.",
+    });
+  }
+};
 
 export const generateOTP = async (req, res) => {};
 
