@@ -10,7 +10,7 @@ router.post('/authenticate', )
 router.post('/register/mail', )
 
 router.put("/update/user/:id",auth, updateUser);
-router.put('/reset/password', resetPassword)
+router.put('/reset/password',verifyUser, resetPassword)
 
 router.get("/user/:username", getUser);
 router.get('/generate/otp', localVariable, verifyUser, generateOTP)

@@ -133,6 +133,7 @@ export const updateUser = async (req, res) => {
       },
       { new: true }
     );
+    User.findOneAndUpdate;
     res.status(201).json({
       success: true,
       message: "Votre compte a été mise à jour",
@@ -167,6 +168,40 @@ export const verifyOTP = async (req, res) => {
   return res.status(400).json({ success: false, message: "Code OTP invalid" });
 };
 
-export const resetSession = async (req, res) => {};
+export const resetSession = async (req, res) => {
+  if (req.app.locals.resetSession) {
+    req.app.locals.resetSession = false;
+    return res.status(201).json({ success: true, message: "Accès accordé" });
+  }
+  return res.status(400).json({ success: false, message: "Session expiré" });
+};
 
-export const resetPassword = async (req, res) => {};
+export const resetPassword = async (req, res) => {
+//   try {
+//     const salt = bcrypt.genSaltSync(10);
+//     const hash = bcrypt.hashSync(req.body.password, salt);
+//     const { username } = req.body;
+
+//     const exist = User.findOne({ username });
+//     if (exist) {
+//       const updatePassword = User.updateOne(
+//         {
+//           username,
+//         },
+//         {
+//           password: hash,
+//         }
+//       );
+//       return res.status(500).json(console.log(err), {
+//         success: false,
+//         message: "activer le mot de passe haché",
+//         updatePassword
+//       });
+//     }
+//   } catch (err) {
+//     res.status(500).json(console.log(err), {
+//       success: false,
+//       message: "L'operation a echoué. Veuillez reprendre Svp!",
+//     });
+//   }
+};
