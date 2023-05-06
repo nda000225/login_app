@@ -4,7 +4,6 @@ export async function usernameValidate(values) {
   const errors = usernameVerify({}, values);
   return errors;
 }
-
 function usernameVerify(error = {}, values) {
   if (!values.username) {
     error.username = toast.error("Username required!");
@@ -19,7 +18,6 @@ export async function passwordValidate(values) {
   const errors = passwordVerify({}, values);
   return errors;
 }
-
 function passwordVerify(error = {}, values) {
   const specialChars = /[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>\/?~]/;
   if (!values.password) {
@@ -61,3 +59,11 @@ function emailVerify(error = {}, values) {
 
   return error;
 }
+
+
+
+export async function profileValidation(values) {
+  const errors = emailVerify({}, values);
+  return errors
+}
+

@@ -89,7 +89,7 @@ function Register() {
                 Register
               </button>
             </div>
-            <div className="text-center">
+            <div className="text-center py-3">
               <span>
                 Already Register?{" "}
                 <Link className="text-red-500" to="/login">
