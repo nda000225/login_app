@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { generateOTP, getUser, login, register, resetPassword, resetSession, updateUser, verifyOTP, verifyUser } from "../controllers/userController.js";
+import { auth } from "../middleware/auth.js";
 
 const router = Router()
 
@@ -8,7 +9,7 @@ router.post("/login", verifyUser, login);
 router.post('/authenticate', )
 router.post('/register/mail', )
 
-router.put("/update/user/:id", updateUser);
+router.put("/update/user/:id",auth, updateUser);
 router.put('/reset/password', resetPassword)
 
 router.get("/user/:username", getUser);
