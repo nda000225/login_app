@@ -20,7 +20,7 @@ function Username() {
   });
   return (
     <div className="container mx-auto">
-    <Toaster position="top-center" />
+    <Toaster position="top-center" reverseOrder={false} />
       <div className="flex justify-center items-center h-screen">
         <div
           className={
