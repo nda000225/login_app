@@ -19,7 +19,7 @@ export async function passwordValidate(values) {
   return errors;
 }
 function passwordVerify(error = {}, values) {
-  const specialChars = /[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>\/?~]/;
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   if (!values.password) {
     error.password = toast.error("password required!");
   } else if (values.password.includes(" ")) {
@@ -35,7 +35,7 @@ function passwordVerify(error = {}, values) {
 
 export async function resetPasswordValidate(values) {
   const errors = passwordVerify({}, values);
-  if (values.password != values.password_confirm) {
+  if (values.password !== values.password_confirm) {
     errors.exist = toast.error("password not match");
   }
   return errors;
