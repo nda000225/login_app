@@ -35,15 +35,29 @@ function passwordVerify(error = {}, values) {
   return error;
 }
 
-
 export async function resetPasswordValidate(values) {
   const errors = passwordVerify({}, values);
-  if(values.password != values.password_confirm){
+  if (values.password != values.password_confirm) {
     errors.exist = toast.error("password not match");
   }
+  return errors;
+}
+
+export async function registerValidation(values) {
+  const errors = usernameVerify({}, values);
+  passwordVerify(errors, values);
+  emailVerify(errors, values);
   return errors
 }
 
+function emailVerify(error = {}, values) {
+  if (!values.email) {
+    error.email = toast.error("Email required!");
+  } else if (values.email.includes(" ")) {
+    error.email = toast.error("Wrong email!");
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z][2,4]$/i.test(values.email)) {
+    error.email = toast.error("Invalid email address");
+  }
 
-
-
+  return error;
+}
