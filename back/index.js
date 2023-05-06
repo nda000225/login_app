@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import connect from './database/mongodb.js';
+import userRoute from './routes/user.js'
 
 dotenv.config();
 
@@ -17,8 +18,9 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors(corsOptions));
 app.use(morgan('tiny'));
+app.disable('x-powered-by'); //less hackers know about our stack
 
-
+app.use('/api/v1', userRoute)
 app.get("/", (req, res) => {
   res.send("Akwaba");
 });
