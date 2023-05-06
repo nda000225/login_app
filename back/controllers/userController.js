@@ -101,7 +101,22 @@ export const login = async (req, res) => {
   }
 };
 
-export const getUser = async (req, res) => {};
+export const getUser = async (req, res) => {
+ const {username} = req.params;
+ try {
+   const user = await User.findOne({username});
+   res.status(200).json({
+     success: true,
+     message: "Votre demande a été trouvé",
+     data: user,
+   });
+ } catch (err) {
+   res.status(404).json({
+     success: false,
+     message: "Votre demande n'est pas traitée.",
+   });
+ }
+};
 
 export const updateUser = async (req, res) => {};
 
