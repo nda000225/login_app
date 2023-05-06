@@ -13,3 +13,11 @@ export const auth = async (req, res, next) => {
       .json({ success: false, message: "Authentification échouée" });
   }
 };
+
+export const localVariable = async (req, res, next) => {
+  req.app.locals = {
+    OTP: null,
+    resetSession: false
+  }
+  next()
+};

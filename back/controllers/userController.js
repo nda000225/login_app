@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import otpGenerator from "otp-generator";
 
 export const verifyUser = async (req, res, next) => {
   try {
@@ -145,9 +146,26 @@ export const updateUser = async (req, res) => {
   }
 };
 
-export const generateOTP = async (req, res) => {};
+export const generateOTP = async (req, res) => {
+  req.app.locals.OTP = otpGenerator.generate(6, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+  });
+  res.status(201).json({ success: true, code: req.app.locals.OTP });
+};
 
-export const verifyOTP = async (req, res) => {};
+export const verifyOTP = async (req, res) => {
+  const { code } = req.query;
+  if (parseInt(req.app.locals.OTP) === parseInt(code)) {
+    req.app.locals.OTP = null; //reset OTP value
+    req.app.locals.resetSession = true; //start session for reset password
+    return res
+      .status(201)
+      .json({ success: true, message: "Vérifié avec succès" });
+  }
+  return res.status(400).json({ success: false, message: "Code OTP invalid" });
+};
 
 export const resetSession = async (req, res) => {};
 
