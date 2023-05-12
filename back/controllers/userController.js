@@ -177,31 +177,34 @@ export const resetSession = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
-//   try {
-//     const salt = bcrypt.genSaltSync(10);
-//     const hash = bcrypt.hashSync(req.body.password, salt);
-//     const { username } = req.body;
+  try {
+    /**regenerer l OTP pour que sa session toujours accessif au cas ou */
+    if (!req.app.locals.resetSession)
+      return res
+        .status(400)
+        .json({ success: false, message: "Session expiré" });
 
-//     const exist = User.findOne({ username });
-//     if (exist) {
-//       const updatePassword = User.updateOne(
-//         {
-//           username,
-//         },
-//         {
-//           password: hash,
-//         }
-//       );
-//       return res.status(500).json(console.log(err), {
-//         success: false,
-//         message: "activer le mot de passe haché",
-//         updatePassword
-//       });
-//     }
-//   } catch (err) {
-//     res.status(500).json(console.log(err), {
-//       success: false,
-//       message: "L'operation a echoué. Veuillez reprendre Svp!",
-//     });
-//   }
+    const salt = bcrypt.genSaltSync(10);
+    const password = bcrypt.hashSync(req.body.password, salt);
+    const { id, username } = req.params;
+
+    const newPassword = await User.findByIdAndUpdate(
+      { _id: id },
+      { password: password },
+      { username: username },
+      { new: true }
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Mot de passe modifié et haché",
+      data: newPassword,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "L'operation a echoué. Veuillez reprendre Svp!",
+    });
+    console.log(error);
+  }
 };
